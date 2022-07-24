@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from JobTask import JobTask, IJobTasks
+from JobTask import JobTask
 
 class ITeamMember(ABC):
 	@abstractmethod

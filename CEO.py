@@ -1,7 +1,7 @@
-from JobInfo import EmployeeInformation
+from JobInfo import EmployeeInformation, JobTitle
 from ITeamManager import ITeamManager
 from ITeamMember import ITeamMember
-from JobTask import IJobTasks, JobTask, JobTitle
+from JobTask import IJobTasks, JobTask
 
 class CEOticketTasks(IJobTasks):
 	def __init__(self, tickets: list[JobTask] = []):
@@ -15,10 +15,10 @@ class CEOticketTasks(IJobTasks):
 		return self.__tickets
 
 class CEO(ITeamManager):
-	def __init__(self, empInfo: EmployeeInformation, ceoTasks: CEOticketTasks, subordinates: list[ITeamMember] = []):
+	def __init__(self, empInfo: EmployeeInformation):
 		self.__employeeInfo = empInfo
-		self.__subordinates = subordinates
-		self.__ceoTasks = ceoTasks
+		self.__subordinates: list[ITeamMember]  = []
+		self.__ceoTasks = CEOticketTasks([])
 	def getName(self):
 		return self.__employeeInfo.getName()
 	def getID(self):

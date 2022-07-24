@@ -15,9 +15,9 @@ class SupportTicketTasks(IJobTasks):
 		return self.__tickets
 
 class SupportTeamMember(ITeamMember):
-	def __init__(self, employeeInfo: EmployeeInformation, supportTicketTasks: SupportTicketTasks) -> None:
+	def __init__(self, employeeInfo: EmployeeInformation) -> None:
 		self.__employeeInfo = employeeInfo
-		self.__supportTicketTasks = supportTicketTasks
+		self.__supportTicketTasks = SupportTicketTasks([])
 	def getName(self):
 		return self.__employeeInfo.getName()
 	def getID(self):
@@ -31,12 +31,11 @@ class SupportTeamMember(ITeamMember):
 	def assignTicketToSelf(self, ticket: JobTask):
 		self.__supportTicketTasks.assignJobItem(ticket, self.getJobTitle())
 
-
 class SupportTeamLead(ITeamManager):
-	def __init__(self, employeeInfo: EmployeeInformation, supportTicketTasks: SupportTicketTasks, subordinates: list[ITeamMember] = []) -> None:
+	def __init__(self, employeeInfo: EmployeeInformation) -> None:
 		self.__employeeInfo = employeeInfo
-		self.__supportTicketTasks = supportTicketTasks
-		self.__subordinates = subordinates
+		self.__supportTicketTasks = SupportTicketTasks([])
+		self.__subordinates: list[ITeamMember] = []
 	def getName(self):
 		return self.__employeeInfo.getName()
 	def getID(self):
@@ -54,7 +53,6 @@ class SupportTeamLead(ITeamManager):
 	def getPay(self) -> int:
 		totalTickets = 0
 		for supMember in self.getSubordinanates():
-			test = supMember.getListJobTasks()
 			totalTickets = totalTickets + len(supMember.getListJobTasks())
 		return totalTickets * 2 
 
